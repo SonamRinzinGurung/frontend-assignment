@@ -54,3 +54,18 @@ a {
 p {
   font-size: clamp(0.7rem, 2.3vw, 1rem);
 }
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  width: 6rem;
+  height: 6rem;
+  border: 5px solid #829ab1;
+  border-radius: 50%;
+  border-top-color: #9d9aed;
+  animation: spinner 2s linear infinite;
+}
