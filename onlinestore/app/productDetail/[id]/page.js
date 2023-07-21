@@ -39,7 +39,7 @@ export default function ProductDetail({ params }) {
             className="h-80 w-72 md:h-96 md:w-80"
           />
         </div>
-        <div className="w-1/2 text-center md:text-left">
+        <div className="w-1/2 text-center md:text-left md:ml-2">
           <h1 className="font-display">{data?.title}</h1>
           <p className="font-roboto font-medium text-2xl md:text-4xl mt-1 text-gray-800">
             ${data?.price}
