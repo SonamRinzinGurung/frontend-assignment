@@ -1,15 +1,15 @@
+"use client";
 import Search from "./Search";
 import Card from "./Card";
 import Loading from "./Loading";
 import { useQuery } from "@tanstack/react-query";
 
 export default function HomePage() {
-  const { isLoading, error, data } = useQuery({
+  let { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
       fetch("https://fakestoreapi.com/products").then((res) => res.json()),
   });
-
   if (error)
     return (
       <div className="flex flex-col items-center justify-center">
