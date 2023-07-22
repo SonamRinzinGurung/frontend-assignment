@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <title>"OnlineStore"</title>
+        <title>{"OnlineStore"}</title>
         <meta name="description" content={"React Intern Assignment"} />
       </head>
 
