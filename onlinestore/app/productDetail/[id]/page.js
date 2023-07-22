@@ -13,6 +13,35 @@ export default function ProductDetail({ params }) {
       ),
   });
 
+  // Add the product to the cart
+  const handleAddToCart = () => {
+    // Get the current cart from localStorage
+    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Convert params?.id to string for consistent comparison
+    const productId = String(params?.id);
+
+    // Check if the current cart already contains the product
+    const updatedCart = currentCart.map((product) => {
+      if (String(product.id) === productId) {
+        // Increment the quantity if the product already exists
+        return { ...product, quantity: product.quantity + 1 };
+      }
+      return product;
+    });
+
+    // If the product does not exist in the cart, add it with quantity 1
+    const existingProduct = currentCart.find(
+      (product) => String(product.id) === productId
+    );
+    if (!existingProduct) {
+      updatedCart.push({ ...data, quantity: 1 });
+    }
+
+    // Save the updated cart back to localStorage
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
   // If the data is loading, show the loading component
   if (isLoading) {
     return (
@@ -43,7 +72,10 @@ export default function ProductDetail({ params }) {
             ${data?.price}
           </p>
           <div className="py-4">
-            <button className="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none">
+            <button
+              className="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none"
+              onClick={handleAddToCart}
+            >
               Add to Cart
             </button>
           </div>

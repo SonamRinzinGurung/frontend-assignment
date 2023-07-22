@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
 
       <body>
         <QueryClientProvider client={queryClient}>
-          <Header title={metadata.title} />
+          <Header />
           {children}
         </QueryClientProvider>
       </body>

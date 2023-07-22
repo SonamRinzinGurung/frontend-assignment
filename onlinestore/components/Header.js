@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Cart } from ".";
 
-export default function Header({ title }) {
+export default function Header() {
   return (
     <header
       className="flex m-1 shadow-sm 
@@ -11,7 +11,14 @@ export default function Header({ title }) {
       <div className="ml-2">
         <h1>
           <Link href="/" className="font-heading text-2xl font-bold">
-            {title}
+            Online
+            <span
+              className="
+            text-blue-500 font-bold italic
+            "
+            >
+              Store
+            </span>
           </Link>
         </h1>
       </div>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Card({ id, title, image, price }) {
+export default function Card({ id, title, image, price, count }) {
   return (
     <article>
       <Link href={`/productDetail/${id}`}>
@@ -19,6 +19,11 @@ export default function Card({ id, title, image, price }) {
           <div className="flex flex-col items-center mt-2 p-2 text-center ">
             <h4 className="font-bold font-display">{title}</h4>
             <p className="text-lg md:text-2xl text-gray-600 mt-1">${price}</p>
+            {count > 0 ? (
+              <p className="text-lg md:text-2xl text-gray-600 mt-1">
+                Quantity: {count}
+              </p>
+            ) : null}
           </div>
         </div>
       </Link>
