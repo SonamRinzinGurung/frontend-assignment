@@ -3,9 +3,15 @@ import { Card } from "@/components";
 
 export default function CartPage() {
   //get the cart items from local storage
-  const cartItems = localStorage.getItem("cart")
-    ? JSON.parse(localStorage.getItem("cart"))
-    : [];
+
+  let cartItems = [];
+  if (typeof window !== "undefined") {
+    cartItems = localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart"))
+      : [];
+  } else {
+    cartItems = [];
+  }
 
   // Calculate the total price of the cart items with quantity and price
   const calculateTotalPrice = () => {
