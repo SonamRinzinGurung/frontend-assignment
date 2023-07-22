@@ -1,8 +1,10 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "@/components/Loading";
+import { Loading, Error } from "../../../components";
 
 export default function ProductDetail({ params }) {
+  // Fetch the product details from the API using the `useQuery` hook from react-query
+  // The `useQuery` hook returns an object with three properties: `isLoading`, `error`, and `data`.
   const { isLoading, error, data } = useQuery({
     queryKey: ["productDetail", params?.id],
     queryFn: () =>
@@ -11,6 +13,7 @@ export default function ProductDetail({ params }) {
       ),
   });
 
+  // If the data is loading, show the loading component
   if (isLoading) {
     return (
       <div className="flex">
@@ -21,17 +24,12 @@ export default function ProductDetail({ params }) {
     );
   }
 
-  if (error)
-    return (
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="text-2xl text-red-600">An error has occurred:</h1>
-        <p className="text-lg text-red-600">{error.message}</p>
-      </div>
-    );
+  // If there is an error, show the error component
+  if (error) return <Error error={error} />;
 
   return (
-    <div className="flex flex-col md:px-4 mt-6 mx-6 md:mx-10">
-      <div className="flex items-center flex-col md:flex-row md:justify-evenly bg-white rounded-lg shadow-md md:p-4">
+    <main className="flex flex-col md:px-4 mt-12 mx-6 md:mx-10">
+      <section className="flex items-center flex-col md:flex-row md:justify-evenly bg-white rounded-lg shadow-md md:p-4">
         <div>
           <img
             src={data?.image}
@@ -44,14 +42,19 @@ export default function ProductDetail({ params }) {
           <p className="font-roboto font-medium text-2xl md:text-4xl mt-1 text-gray-800">
             ${data?.price}
           </p>
+          <div className="py-4">
+            <button className="px-6 py-2 transition ease-in duration-200 uppercase rounded-full hover:bg-gray-800 hover:text-white border-2 border-gray-900 focus:outline-none">
+              Add to Cart
+            </button>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-6 mb-8">
+      <section className="mt-6 mb-8">
         <h2 className="font-heading font-semibold">Description</h2>
         <hr className="my-2 bg-black shadow-lg" />
         <p className="text-lg md:text-2xl mt-2">{data?.description}</p>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

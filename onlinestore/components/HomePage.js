@@ -1,41 +1,42 @@
 "use client";
 import Search from "./Search";
 import Card from "./Card";
-import Loading from "./Loading";
+import { Loading, Error } from "../components";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 export default function HomePage() {
+  // state to store the search results
   const [result, setResult] = useState(null);
 
-  let { isLoading, error, data } = useQuery({
+  // Fetch the product details from the API using the `useQuery` hook from react-query
+  // The `useQuery` hook returns an object with three properties: `isLoading`, `error`, and `data`.
+  const { isLoading, error, data } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
       fetch("https://fakestoreapi.com/products").then((res) => res.json()),
   });
 
+  // filter the data based on the search query
   const filterSearch = (e, search) => {
     e.preventDefault();
     const filteredResults = data.filter((product) =>
       product.title.toLowerCase().includes(search.toLowerCase())
     );
-    console.log(filteredResults);
     setResult(filteredResults);
   };
 
-  if (error)
-    return (
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="text-2xl text-red-600">An error has occurred:</h1>
-        <p className="text-lg text-red-600">{error.message}</p>
-      </div>
-    );
+  // If the data is loading, show the loading component
+  if (error) return <Error error={error} />;
 
   return (
     <main className="flex flex-col items-center justify-between">
       <Search filterSearch={filterSearch} />
       {isLoading && <Loading />}
 
+      {/* 
+        If the search results are empty, show the no results found component
+      */}
       {result?.length === 0 ? (
         <div className="flex flex-col items-center justify-center my-4">
           <h1 className="text-2xl text-red-600">No results found</h1>
@@ -46,11 +47,15 @@ export default function HomePage() {
         justify-center items-center w-full p-4 md:p-8
       "
         >
+          {/* 
+            If the search results are not empty, show the search results
+          */}
           {result?.length > 0
             ? result.map((product) => {
                 return <Card {...product} key={product.id} />;
               })
-            : data?.map((product) => {
+            : // If the search results are empty, show the products from the API call
+              data?.map((product) => {
                 return <Card {...product} key={product.id} />;
               })}
         </div>
