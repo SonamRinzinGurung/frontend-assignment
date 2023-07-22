@@ -28,3 +28,10 @@
    ```sh
    http://localhost:3000/
    ```
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org/)
+- [React.js](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TanStack](https://tanstack.com/)
